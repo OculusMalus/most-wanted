@@ -288,10 +288,7 @@ function initSearch()
 	responder(result);
 }
 
-function getPersonByName (results)
-{
-	var result = getPersonInfo(firstName, lastName)
-}
+
 
 function getFirstName (results)
 {
@@ -316,10 +313,10 @@ function getLastName (results)
 
 function getGender (results)
 {
-	var gender = prompt("Type male if you are seachging for a male, or female for female. If you don't know, are unsure, or you don't care, leave blank and click on 'OK'")
+	var gender = prompt("Type male, female or other. If you don't know, are unsure, or you don't care, leave blank and click on 'OK'")
 	if (gender !== "")
 	{
-		while (gender.toLowerCase() !== "male" && gender.toLowerCase() !== "female")
+		while (gender.toLowerCase() !== "male" && gender.toLowerCase() !== "female" && gender.toLowerCase() !== "other")
 			{
 			gender = prompt ("Please type male for male or female for female.")
 			}
@@ -347,6 +344,11 @@ function getDateOfBirth (results)
 function responder(results){
 	// results may be a list of strings, an object, or a single string. 
 	alert(results) //console.log(dataObject[key]));
+}
+
+function getPersonByName (results)
+{
+	var result = getPersonInfo(firstName, lastName)
 }
 
 function getPersonInfo(firstname, lastname){
