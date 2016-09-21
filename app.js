@@ -276,47 +276,73 @@ function printAllToConsole(dataObj){
 printAllToConsole(dataObject);
 */
 
-function initSearch(){
+function initSearch()
+{
 	alert("let's get started searching for a specific person...");
 
+	// then pass that info to the respective function.
+	
+	
+		
+	// once the search is done, pass the results to the responder function
+	responder(result);
+}
 
+function getPersonByName (results)
+{
+	var result = getPersonInfo(firstName, lastName)
+}
 
+function getFirstName (results)
+{
 	// get all the information you need to run the search
 	var firstName = prompt("Do you know the person's first name? If not, leave blank and click on 'OK'");
 	 while (/[^a-zA-Z]/.test(firstName))
 	 	{
 	 		firstName = prompt ("Please enter a first name using only letters");
 	 	}
+}
+
+function getLastName (results)
+{
 
 	var lastName = prompt("Do you know the person's last name? If not, leave blank and click on 'OK'");
 	while (/[^a-zA-Z]/.test(lastName))
 	 	{
 	 		lastName = prompt ("Please enter a last name using only letters");
 	 	}
-
-	var gender = prompt("Type male if you are seachging for a male, or female for female. If you don't know, are unsure, or you don't care, leave blank and click on 'OK'")
-	while (gender.toLowerCase() !== "male" && gender.toLowerCase() !== "female")
-	{
-		gender = prompt ("Please type male for male or female for female.")
-	}
-
-
-	var dateOfBirth = prompt("Enter the person's date of birth in the mm/dd/yyyy format. If you don't, leave blank and click on 'OK'")
-	while(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateOfBirth))
-	{
-		dateOfBirth = prompt ("Please try again. Enter the date of birth in mm/dd/yyyy format.")
-	}
-
-
-
-	
-	// then pass that info to the respective function.
-	var result = getPersonInfo(firstName, lastName)
-	
-		
-	// once the search is done, pass the results to the responder function
-	responder(result);
 }
+
+
+function getGender (results)
+{
+	var gender = prompt("Type male if you are seachging for a male, or female for female. If you don't know, are unsure, or you don't care, leave blank and click on 'OK'")
+	if (gender !== "")
+	{
+		while (gender.toLowerCase() !== "male" && gender.toLowerCase() !== "female")
+			{
+			gender = prompt ("Please type male for male or female for female.")
+			}
+	}
+}
+
+
+function getDateOfBirth (results)
+{
+	var dateOfBirth = prompt("Enter the person's date of birth in the mm/dd/yyyy format. If you don't, leave blank and click on 'OK'")
+	if (dateOfBirth !== "")
+	{
+		while(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateOfBirth))
+			{
+			dateOfBirth = prompt ("Please try again. Enter the date of birth in mm/dd/yyyy format.")
+			}
+	}
+
+}
+
+
+	
+	
 
 function responder(results){
 	// results may be a list of strings, an object, or a single string. 
