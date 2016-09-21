@@ -278,19 +278,21 @@ printAllToConsole(dataObject);
 
 function initSearch()
 {
-	alert("let's get started searching for a specific person...");
+	alert("Let's get started searching for a specific person...");
 
 	// then pass that info to the respective function.
 	
-	
-		
+	var firstName = getFirstName();
+	var lastName = getLastName();
+	var result = getPersonInfo(firstName, lastName);
+
 	// once the search is done, pass the results to the responder function
 	responder(result);
 }
 
 
 
-function getFirstName (results)
+function getFirstName ()
 {
 	// get all the information you need to run the search
 	var firstName = prompt("Do you know the person's first name? If not, leave blank and click on 'OK'");
@@ -298,9 +300,12 @@ function getFirstName (results)
 	 	{
 	 		firstName = prompt ("Please enter a first name using only letters");
 	 	}
+ 	return firstName;
 }
 
-function getLastName (results)
+
+
+function getLastName ()
 {
 
 	var lastName = prompt("Do you know the person's last name? If not, leave blank and click on 'OK'");
@@ -308,10 +313,12 @@ function getLastName (results)
 	 	{
 	 		lastName = prompt ("Please enter a last name using only letters");
 	 	}
+ 	return lastName;
 }
 
 
-function getGender (results)
+
+function getGender ()
 {
 	var gender = prompt("Type male, female or other. If you don't know, are unsure, or you don't care, leave blank and click on 'OK'")
 	if (gender !== "")
@@ -321,7 +328,10 @@ function getGender (results)
 			gender = prompt ("Please type male for male or female for female.")
 			}
 	}
+	return gender;
 }
+
+
 
 
 function getDateOfBirth (results)
@@ -334,21 +344,57 @@ function getDateOfBirth (results)
 			dateOfBirth = prompt ("Please try again. Enter the date of birth in mm/dd/yyyy format.")
 			}
 	}
-
+	return dateOfBirth;
 }
 
+function getHeight(){
+    
+    var height = prompt("Do you know the person's height in inches?  If you don't know it, leave blank and click 'OK'");
+    if(height !==""){
+        while (height <1 || height >200){
+            height = prompt("Please re-enter a valid height in inches.  More that one inch but less than 200.");
+        
+        }
+    }
+    return height;
+}
 
-	
-	
+function getWeight(){
+    var weight = prompt("Please enter the person's weight.  If you don't know it, leave blank and click 'OK'");
+    if(weight!==""){
+        while (weight < 10 || weight > 700){
+            weight = prompt("Please try again.  Enter a number between 10 and 700.")
+        }
+    }
+    return weight;
+}
+function getEyeColor(){
+    var eyeColor = ("Do you know the person's eye color?  If you don't, leave it blank and click 'OK'");
+    if (eyeColor !==""){
+        while (eyeColor!=brown || eyeColor!=blue || eyeColor!=green || eyeColor!=hazel){
+            eyeColor = prompt("Please try again. Please choose blue, green, brown or hazel")
+        }
+    }
+    return eyeColor;
+}
+function getOccupation(){
+    var occupation = ("Do you know the person's occupation? If you don't, leave it blank and click 'OK'");
+    while (/[^a-zA-Z]/.test(occupation))
+         {
+             occupation= prompt ("Please enter a one word description for occupation");
+         }
+        return occupation;
+}
 
 function responder(results){
 	// results may be a list of strings, an object, or a single string. 
 	alert(results) //console.log(dataObject[key]));
 }
 
+
 function getPersonByName (results)
 {
-	var result = getPersonInfo(firstName, lastName)
+	var result = getPersonInfo(firstName, lastName);
 }
 
 function getPersonInfo(firstname, lastname){
@@ -367,11 +413,14 @@ function getPersonInfo(firstname, lastname){
 	}
 
 	return jsonArray;
+}
+
+
 	//var array = Object.keys(dataObject).map(function(k) { return dataObject[k] });
 	//var result = array.find(x => x.firstName === 'firstname' && x.lastName ==='lastname');"This will be the information for whoever you searched for";
 	// look up person's information
 	
-}
+
 
 
 
