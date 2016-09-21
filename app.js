@@ -256,7 +256,7 @@ var dataObject = {
 	  "lastName": "Madden",
 	  "gender": "female",
 	  "dob": "2/02/1987",
-	  "height": 67,
+	 "height": 67,
 	  "weight": 100,
 	  "eyeColor": "blue",
 	  "occupation": "doctor",
@@ -277,31 +277,87 @@ printAllToConsole(dataObject);
 */
 
 function initSearch(){
-	alert("Hello World");
+	alert("let's get started searching for a specific person...");
+
+
 
 	// get all the information you need to run the search
-	var firstName = prompt("Do you know the person's first name?");
+	var firstName = prompt("Do you know the person's first name? If not, leave blank and click on 'OK'");
+	 while (/[^a-zA-Z]/.test(firstName))
+	 	{
+	 		firstName = prompt ("Please enter a first name using only letters");
+	 	}
 
-	var lastName = prompt("Do you know the person's last name?");
+	var lastName = prompt("Do you know the person's last name? If not, leave blank and click on 'OK'");
+	while (/[^a-zA-Z]/.test(lastName))
+	 	{
+	 		lastName = prompt ("Please enter a last name using only letters");
+	 	}
+
+	var gender = prompt("Type male if you are seachging for a male, or female for female. If you don't know, are unsure, or you don't care, leave blank and click on 'OK'")
+	while (gender.toLowerCase() !== "male" && gender.toLowerCase() !== "female")
+	{
+		gender = prompt ("Please type male for male or female for female.")
+	}
 
 
+	var dateOfBirth = prompt("Enter the person's date of birth in the mm/dd/yyyy format. If you don't, leave blank and click on 'OK'")
+	while(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateOfBirth))
+	{
+		dateOfBirth = prompt ("Please try again. Enter the date of birth in mm/dd/yyyy format.")
+	}
+
+
+
+	
 	// then pass that info to the respective function.
 	var result = getPersonInfo(firstName, lastName)
-
+	
+		
 	// once the search is done, pass the results to the responder function
 	responder(result);
 }
 
 function responder(results){
 	// results may be a list of strings, an object, or a single string. 
-	alert(results);
+	alert(results) //console.log(dataObject[key]));
 }
 
 function getPersonInfo(firstname, lastname){
-	var result = "This will be the information for whoever you searched for";
+	
+	var jsonArray = [];
+	
+	for (var key in dataObject) {
+		if (dataObject.hasOwnProperty(key)) {
+			
+			if (dataObject[key].lastName.toLowerCase() === lastname.toLowerCase() && dataObject[key].firstName.toLowerCase() === firstname.toLowerCase()) {
+				console.log(key + " -> " + JSON.stringify(dataObject[key]));
+
+				jsonArray.push(key + " -> " + JSON.stringify(dataObject[key]));
+			}
+		}
+	}
+
+	return jsonArray;
+	//var array = Object.keys(dataObject).map(function(k) { return dataObject[k] });
+	//var result = array.find(x => x.firstName === 'firstname' && x.lastName ==='lastname');"This will be the information for whoever you searched for";
 	// look up person's information
-	return result;
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getFamily(){
 	// return list of names of immediate family members
@@ -310,4 +366,4 @@ function getFamily(){
 // there will be much more here, and some of the code above will certainly change
 
 initSearch();
-window.close(); // exit window as the end of the session -- you may remove this
+//window.close(); // exit window as the end of the session -- you may remove this
