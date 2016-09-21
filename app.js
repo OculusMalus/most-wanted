@@ -280,10 +280,13 @@ function initSearch(){
 	alert("Hello World");
 
 	// get all the information you need to run the search
-	var yourName = prompt("Who do you want to search for?");
+	var firstName = prompt("Do you know the person's first name?");
+
+	var lastName = prompt("Do you know the person's last name?");
+
 
 	// then pass that info to the respective function.
-	var result = getPersonInfo("J", "T")
+	var result = getPersonInfo(firstName, lastName)
 
 	// once the search is done, pass the results to the responder function
 	responder(result);
