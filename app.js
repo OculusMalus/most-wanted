@@ -304,9 +304,12 @@ function initSearch()
 
 	// then pass that info to the respective function.
 	
-	var ID = findIdByName();
+	var dataObjectId = findIdByName();
 	//var result = getPersonInfo(firstName, lastName);
-	var result = (getDescendants(ID));
+	//var result = (getDescendants(dataObjectId));
+
+	//var result = getFamily(dataObjectId);
+	var result = findParents(dataObjectId);
 	// once the search is done, pass the results to the responder function
 	responder(result);
 
@@ -497,7 +500,45 @@ function findIdByName()
 }
 
 
+function findObjectById(id)
+{
+	var x;
+	for (x in dataObject)
+	{
+		if (id === dataObject[x].id)
+			return dataObject[x];
+	}
+}
 
+
+function findParents(id)
+
+{
+	var parentsArray = [];
+	var x;
+
+	var person = findObjectById(id);
+
+	if (person.parents.length !== 0)
+	{
+		for (x in dataObject)
+		{
+		//if (dataObject.parents[0] != null && dataObject.parents[1] != null)
+			if (person.parents[0] === dataObject[x].id || person.parents[1] === dataObject[x].id)
+			{
+				parentsArray.push(JSON.stringify(dataObject[x].firstName) + " " + JSON.stringify(dataObject[x].lastName) + " - parent", "\n");
+						
+			}
+
+		}
+		
+	}
+	else 
+	{
+		parentsArray.push("None found - parents", "\n");
+	}
+	return parentsArray;
+}
 
 
 function getDescendants(id){
@@ -527,6 +568,7 @@ function getDescendants(id){
 	return descendantsArray;
 								
 }
+
 
 
 
