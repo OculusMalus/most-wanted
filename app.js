@@ -139,7 +139,7 @@ var dataObject = [
 	  "weight": 118,
 	  "eyeColor": "brown",
 	  "occupation": "programmer",
-	  "parents": [401222887,401222887],
+	  "parents": [272822514,401222887],
 	  "currentSpouse": 294874671 
 	},
 	{
@@ -152,7 +152,7 @@ var dataObject = [
 	  "weight": 179,
 	  "eyeColor": "blue",
 	  "occupation": "nurse",
-	  "parents": [401222887,401222887],
+	  "parents": [272822514,401222887],
 	  "currentSpouse": 159819275 
 	},
 	{
@@ -304,12 +304,12 @@ function initSearch()
 
 	// then pass that info to the respective function.
 	
-	var firstName = getFirstName();
-	var lastName = getLastName();
-	var result = getPersonInfo(firstName, lastName);
-
+	var ID = findIdByName();
+	//var result = getPersonInfo(firstName, lastName);
+	var result = (getDescendants(ID));
 	// once the search is done, pass the results to the responder function
 	responder(result);
+
 }
 
 
@@ -427,9 +427,9 @@ function getPersonInfo(firstname, lastname){
 		if (dataObject.hasOwnProperty(key)) {
 			
 			if (dataObject[key].lastName.toLowerCase() === lastname.toLowerCase() && dataObject[key].firstName.toLowerCase() === firstname.toLowerCase()) {
-				console.log(key + " -> " + JSON.stringify(dataObject[key]));
+				console.log(key + " -> " + JSON.stringify(dataObject[key], null, "\t"));
 
-				jsonArray.push(key + " -> " + JSON.stringify(dataObject[key]));
+				jsonArray.push(key + " -> " + JSON.stringify(dataObject[key], null, "\t"));
 			}
 		}
 	}
@@ -438,29 +438,99 @@ function getPersonInfo(firstname, lastname){
 }
 
 
+function getPersonDetails (firstname, lastname)
+{
+//var detailsArray = getPersonInfo(firstname, lastname)
+
+//detailsArray.push()
+
+}
 	//var array = Object.keys(dataObject).map(function(k) { return dataObject[k] });
 	//var result = array.find(x => x.firstName === 'firstname' && x.lastName ==='lastname');"This will be the information for whoever you searched for";
 	// look up person's information
 	
+function getLastNameById(id)
+{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function getFamily(){
-	// return list of names of immediate family members
+	for(var x in dataObject)
+	{
+		if (dataObject[x].id() === id)
+		{
+		var lastName = dataObject[x].lastName;
+		}
+	}
+	console.log(lastName);
+	return lastName;
 }
+
+
+function getFirstNameById(id)
+{
+
+	for(var x in dataObject)
+	{
+		if (dataObject[x].id() === id)
+		{
+		var firstName = dataObject[x].firstName;
+		}
+	}
+	console.log(lastName);
+	return lastName;
+
+}
+
+function findIdByName() 
+{
+
+	var firstName = getFirstName();
+	var lastName = getLastName(); 
+    
+    for(var x in dataObject)
+    {
+	if (dataObject[x].lastName.toLowerCase() === lastName && dataObject[x].firstName.toLowerCase() === firstName)
+		{
+		var ID = dataObject[x].id;
+		}
+	}
+	console.log(ID);
+	return ID;
+}
+
+
+
+
+
+function getDescendants(id){
+
+	var descendantsArray = [];
+	var i;
+
+	for (i = 0; i < dataObject.length; i++)
+	{
+
+		if (id === dataObject[i].parents[0] || id === dataObject[i].parents[1])
+		{
+
+			descendantsArray.push(JSON.stringify(dataObject[i].firstName) + " " + JSON.stringify(dataObject[i].lastName) + " - child", "\n");
+			
+				for (var k = 0; k < dataObject.length; k++){
+
+					if (dataObject[i].id ===dataObject[k].parents[0] || dataObject[i].id === dataObject[k].parents[1]){
+
+						descendantsArray.push(JSON.stringify(dataObject[k].firstName) + " " + JSON.stringify(dataObject[k].lastName) + " - grandchild", "\n");
+						
+					}
+				}
+		}
+	}
+	
+	return descendantsArray;
+								
+}
+
+
+
+
 
 // there will be much more here, and some of the code above will certainly change
 
