@@ -305,10 +305,10 @@ function initSearch()
 	// then pass that info to the respective function.
 	
 	var dataObjectId = findIdByName();
-	//var result = getPersonInfo(firstName, lastName);
-	//var result = (getDescendants(dataObjectId));
+	//var result = findPersonInfo(firstName, lastName);
+	//var result = (findDescendants(dataObjectId));
 
-	//var result = getFamily(dataObjectId);
+	//var result = findFamily(dataObjectId);
 	var result = findParents(dataObjectId);
 	// once the search is done, pass the results to the responder function
 	responder(result);
@@ -417,12 +417,12 @@ function responder(results){
 }
 
 
-function getPersonByName (results)
+function findPersonByName (results)
 {
-	var result = getPersonInfo(firstName, lastName);
+	var result = findPersonInfo(firstName, lastName);
 }
 
-function getPersonInfo(firstname, lastname){
+function findPersonInfo(firstname, lastname){
 	
 	var jsonArray = [];
 	
@@ -441,9 +441,9 @@ function getPersonInfo(firstname, lastname){
 }
 
 
-function getPersonDetails (firstname, lastname)
+function findPersonDetails (firstname, lastname)
 {
-//var detailsArray = getPersonInfo(firstname, lastname)
+//var detailsArray = findPersonInfo(firstname, lastname)
 
 //detailsArray.push()
 
@@ -452,7 +452,7 @@ function getPersonDetails (firstname, lastname)
 	//var result = array.find(x => x.firstName === 'firstname' && x.lastName ==='lastname');"This will be the information for whoever you searched for";
 	// look up person's information
 	
-function getLastNameById(id)
+function findLastNameById(id)
 {
 
 	for(var x in dataObject)
@@ -467,7 +467,7 @@ function getLastNameById(id)
 }
 
 
-function getFirstNameById(id)
+function findFirstNameById(id)
 {
 
 	for(var x in dataObject)
@@ -541,7 +541,7 @@ function findParents(id)
 }
 
 
-function getDescendants(id){
+function findDescendants(id){
 
 	var descendantsArray = [];
 	var i;
