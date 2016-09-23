@@ -301,10 +301,29 @@ printAllToConsole(dataObject);
 
 function initSearch()
 {
-	alert("Let's get started searching for a specific person...");
-
-	// then pass that info to the respective function.
 	
+	alert("Let's get started searching for a specific person...");
+	prompt("How do you want to search?\nSEARCH BY :\n  name\n  descendants\n  family\n")
+/* 	var responder;
+	switch(responder){
+	// then pass that info to the respective function.
+	case "name":
+		getPersonByName();
+		alert(result);
+		break;
+		case "descendants":
+		getPersonByName();
+		getDescendants();
+		responder();
+		case "family":
+		getPersonByName();
+		findImmediateFamily();
+		break;
+		default:
+		getPersonByName();
+		responder();
+		break;
+	} */
 	var dataObjectId = findIdByName();
 	//var result = getPersonInfo(firstName, lastName);
 	//var result = (getDescendants(dataObjectId));
@@ -513,33 +532,92 @@ function findObjectById(id)
 }
 
 
-function findParents(id)
-
+function findSiblings(id)
 {
-	var parentsArray = [];
-	var x;
+    var siblingsArray = [];
+    var x;
+    var person = findObjectById(id);
+    if (person.parents.length !== 0)
+    {
+        for (x in dataObject)
+        {
+            if (dataObject[x].parents.length !== 0 && dataObject[x] !== person)
+            {
+                if (person.parents[0] === dataObject[x].parents[0] || person.parents[0] === dataObject[x].parents[1] || person.parents[1] === dataObject[x].parents[0] || person.parents[1] === dataObject[x].parents[1])
+                {
+                    siblingsArray.push(JSON.stringify(dataObject[x].firstName) + " " + JSON.stringify(dataObject[x].lastName) + " - sibling", "\n");
+                }
+            }
+        }
+    }
+    else
+    {
+        siblingsArray.push("None found - siblings", "\n");
+    }
+    return siblingsArray;
+}
 
-	var person = findObjectById(id);
+function findParents(id)
+{
+    var parentsArray = [];
+    var x;
+    var person = findObjectById(id);
+    if (person.parents.length !== 0)
+    {
+        for (x in dataObject)
+        {
+        //if (dataObject.parents[0] != null && dataObject.parents[1] != null)
+            if (person.parents[0] === dataObject[x].id || person.parents[1] === dataObject[x].id)
+            {
+                parentsArray.push(JSON.stringify(dataObject[x].firstName) + " " + JSON.stringify(dataObject[x].lastName) + " - parent", "\n");
+                        
+            }
+        }
+        
+    }
+    else 
+    {
+        parentsArray.push("None found - parents", "\n");
+    }
+    return parentsArray;
+}
 
-	if (person.parents.length !== 0)
-	{
-		for (x in dataObject)
-		{
-		//if (dataObject.parents[0] != null && dataObject.parents[1] != null)
-			if (person.parents[0] === dataObject[x].id || person.parents[1] === dataObject[x].id)
-			{
-				parentsArray.push(JSON.stringify(dataObject[x].firstName) + " " + JSON.stringify(dataObject[x].lastName) + " - parent", "\n");
-						
-			}
-
-		}
-		
-	}
-	else 
-	{
-		parentsArray.push("None found - parents", "\n");
-	}
-	return parentsArray;
+function findChildren(id)
+{
+    var childrenArray = [];
+    var i;
+    for (i = 0; i < dataObject.length; i++)
+    {
+        if (id === dataObject[i].parents[0] || id === dataObject[i].parents[1])
+        {
+            childrenArray.push(JSON.stringify(dataObject[i].firstName) + " " + JSON.stringify(dataObject[i].lastName) + " - child", "\n");
+        }
+    }
+    return childrenArray;
+}
+function findDescendants(id, descendantsArray = [])
+{
+    for (var i in dataObject)
+    {
+        if (id === dataObject[i].parents[0] || id === dataObject[i].parents[1])         //**for each person/object in array 
+        {
+            descendantsArray.push(JSON.stringify(dataObject[i].firstName) + " " + JSON.stringify(dataObject[i].lastName) + "\n");
+            findDescendants(dataObject[i].id, descendantsArray);
+        }
+        
+    }
+    
+    return descendantsArray;
+}
+    
+function findImmediateFamily(id)
+{
+var parents = findParents(id);
+var siblings = findSiblings(id);
+var currentSpouse = findCurrentSpouse(id);
+var descendants= findDescendants(id);
+var immediateFamily = parentsArray.concat(siblingsArray,descendantsArray);
+return immediateFamily;
 }
 
 function findCurrentSpouse(id){
@@ -548,45 +626,33 @@ function findCurrentSpouse(id){
 	
 	var person = findObjectById(id);
 	
-
 		for(spouse in dataObject){
 			if (person.currentSpouse === dataObject[spouse].id){
 				 
-				currentSpouseArray.push(JSON.stringify(dataObject[spouse].firstName )+" "+ JSON.stringify(dataObject[spouse].lastName));
+				currentSpouseArray.push(JSON.stringify(dataObject[spouse].firstName )+" "+ JSON.stringify(dataObject[spouse].lastName).split('"').join(' '));
 			}
 		}
 	
 	
-	return currentSpouseArray;
+	return ("Current Spouse: " + currentSpouseArray);
 }
 
-function getDescendants(id){
-
-	var descendantsArray = [];
-	var i;
-
-	for (i = 0; i < dataObject.length; i++)
-	{
-
-		if (id === dataObject[i].parents[0] || id === dataObject[i].parents[1])
-		{
-
-			descendantsArray.push(JSON.stringify(dataObject[i].firstName) + " " + JSON.stringify(dataObject[i].lastName) + " - child", "\n");
-			
-				for (var k = 0; k < dataObject.length; k++){
-
-					if (dataObject[i].id ===dataObject[k].parents[0] || dataObject[i].id === dataObject[k].parents[1]){
-
-						descendantsArray.push(JSON.stringify(dataObject[k].firstName) + " " + JSON.stringify(dataObject[k].lastName) + " - grandchild", "\n");
-						
-					}
-				}
-		}
-	}
-	
-	return descendantsArray;
-								
+function orderByBirthdate(arrayToOrder = [])
+{
+    arrayToOrder.sort(function(a, b){return new Date(a.dob).getTime() - new Date(b.dob).getTime()});
+    return arrayToOrder;
 }
+/* } */
+//function findByTraits(/*here i want to get a list of traits*/){
+//		var trait;
+//		
+//  		for(trait in dataObject){
+//			
+ // 			if(dataObject[trait]./*something more with the traits)
+//  				
+//  		}
+//		return trait;
+ // 	}
 
 
 
