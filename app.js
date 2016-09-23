@@ -1,3 +1,4 @@
+
 var dataObject = [
 
 	{ "id":272822514,  
@@ -309,7 +310,8 @@ function initSearch()
 	//var result = (getDescendants(dataObjectId));
 
 	//var result = getFamily(dataObjectId);
-	var result = findParents(dataObjectId);
+	//var result = findParents(dataObjectId);
+	var result = findCurrentSpouse(dataObjectId);
 	// once the search is done, pass the results to the responder function
 	responder(result);
 
@@ -492,11 +494,11 @@ function findIdByName()
     {
 	if (dataObject[x].lastName.toLowerCase() === lastName && dataObject[x].firstName.toLowerCase() === firstName)
 		{
-		var ID = dataObject[x].id;
+		var id = dataObject[x].id;
 		}
 	}
-	console.log(ID);
-	return ID;
+	console.log(id);
+	return id;
 }
 
 
@@ -540,6 +542,23 @@ function findParents(id)
 	return parentsArray;
 }
 
+function findCurrentSpouse(id){
+	var currentSpouseArray = [];
+	var spouse;
+	
+	var person = findObjectById(id);
+	
+
+		for(spouse in dataObject){
+			if (person.currentSpouse === dataObject[spouse].id){
+				 
+				currentSpouseArray.push(JSON.stringify(dataObject[spouse].firstName )+" "+ JSON.stringify(dataObject[spouse].lastName));
+			}
+		}
+	
+	
+	return currentSpouseArray;
+}
 
 function getDescendants(id){
 
