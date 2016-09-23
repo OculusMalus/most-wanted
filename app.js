@@ -298,80 +298,84 @@ function printAllToConsole(dataObj){
 printAllToConsole(dataObject);
 */
 
+
 function initSearch()
 {
-	alert("Let's get started searching for a specific person...");
-
-	// then pass that info to the respective function.
-	
-	var dataObjectId = findIdByName();
-	//var result = findPersonInfo(firstName, lastName);
-	//var result = (findDescendants(dataObjectId));
-
-	//var result = findFamily(dataObjectId);
-	var result = findParents(dataObjectId);
-	// once the search is done, pass the results to the responder function
-	responder(result);
-
+    
+    alert("Let's get started searching for a specific person...");
+    prompt("How do you want to search?\nSEARCH BY :\n  name\n  descendants\n  family\n")
+/*  var responder;
+    switch(responder){
+    // then pass that info to the respective function.
+    case "name":
+        getPersonByName();
+        alert(result);
+        break;
+        case "descendants":
+        getPersonByName();
+        getDescendants();
+        responder();
+        case "family":
+        getPersonByName();
+        findImmediateFamily();
+        break;
+        default:
+        getPersonByName();
+        responder();
+        break;
+    } */
+    var dataObjectId = findIdByName();
+    //var result = getPersonInfo(firstName, lastName);
+    //var result = (getDescendants(dataObjectId));
+    //var result = getFamily(dataObjectId);
+    //var result = findParents(dataObjectId);
+    var result = findCurrentSpouse(dataObjectId);
+    // once the search is done, pass the results to the responder function
+    responder(result);
 }
-
-
-
 function getFirstName ()
 {
-	// get all the information you need to run the search
-	var firstName = prompt("Do you know the person's first name? If not, leave blank and click on 'OK'");
-	 while (/[^a-zA-Z]/.test(firstName))
-	 	{
-	 		firstName = prompt ("Please enter a first name using only letters");
-	 	}
- 	return firstName;
+    // get all the information you need to run the search
+    var firstName = prompt("Do you know the person's first name? If not, leave blank and click on 'OK'");
+     while (/[^a-zA-Z]/.test(firstName))
+        {
+            firstName = prompt ("Please enter a first name using only letters");
+        }
+    return firstName;
 }
-
-
-
 function getLastName ()
 {
-
-	var lastName = prompt("Do you know the person's last name? If not, leave blank and click on 'OK'");
-	while (/[^a-zA-Z]/.test(lastName))
-	 	{
-	 		lastName = prompt ("Please enter a last name using only letters");
-	 	}
- 	return lastName;
+    var lastName = prompt("Do you know the person's last name? If not, leave blank and click on 'OK'");
+    while (/[^a-zA-Z]/.test(lastName))
+        {
+            lastName = prompt ("Please enter a last name using only letters");
+        }
+    return lastName;
 }
-
-
-
 function getGender ()
 {
-	var gender = prompt("Type male, female or other. If you don't know, are unsure, or you don't care, leave blank and click on 'OK'")
-	if (gender !== "")
-	{
-		while (gender.toLowerCase() !== "male" && gender.toLowerCase() !== "female" && gender.toLowerCase() !== "other")
-			{
-			gender = prompt ("Please type male for male or female for female.")
-			}
-	}
-	return gender;
+    var gender = prompt("Type male, female or other. If you don't know, are unsure, or you don't care, leave blank and click on 'OK'")
+    if (gender !== "")
+    {
+        while (gender.toLowerCase() !== "male" && gender.toLowerCase() !== "female" && gender.toLowerCase() !== "other")
+            {
+            gender = prompt ("Please type male for male or female for female.")
+            }
+    }
+    return gender;
 }
-
-
-
-
 function getDateOfBirth (results)
 {
-	var dateOfBirth = prompt("Enter the person's date of birth in the mm/dd/yyyy format. If you don't, leave blank and click on 'OK'")
-	if (dateOfBirth !== "")
-	{
-		while(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateOfBirth))
-			{
-			dateOfBirth = prompt ("Please try again. Enter the date of birth in mm/dd/yyyy format.")
-			}
-	}
-	return dateOfBirth;
+    var dateOfBirth = prompt("Enter the person's date of birth in the mm/dd/yyyy format. If you don't, leave blank and click on 'OK'")
+    if (dateOfBirth !== "")
+    {
+        while(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateOfBirth))
+            {
+            dateOfBirth = prompt ("Please try again. Enter the date of birth in mm/dd/yyyy format.")
+            }
+    }
+    return dateOfBirth;
 }
-
 function getHeight(){
     
     var height = prompt("Do you know the person's height in inches?  If you don't know it, leave blank and click 'OK'");
@@ -383,7 +387,6 @@ function getHeight(){
     }
     return height;
 }
-
 function getWeight(){
     var weight = prompt("Please enter the person's weight.  If you don't know it, leave blank and click 'OK'");
     if(weight!==""){
@@ -410,171 +413,201 @@ function getOccupation(){
          }
         return occupation;
 }
-
 function responder(results){
-	// results may be a list of strings, an object, or a single string. 
-	alert(results) //console.log(dataObject[key]));
+    // results may be a list of strings, an object, or a single string. 
+    alert(results) //console.log(dataObject[key]));
 }
-
-
-function findPersonByName (results)
+function getPersonByName (results)
 {
-	var result = findPersonInfo(firstName, lastName);
+    var result = getPersonInfo(firstName, lastName);
 }
-
-function findPersonInfo(firstname, lastname){
-	
-	var jsonArray = [];
-	
-	for (var key in dataObject) {
-		if (dataObject.hasOwnProperty(key)) {
-			
-			if (dataObject[key].lastName.toLowerCase() === lastname.toLowerCase() && dataObject[key].firstName.toLowerCase() === firstname.toLowerCase()) {
-				console.log(key + " -> " + JSON.stringify(dataObject[key], null, "\t"));
-
-				jsonArray.push(key + " -> " + JSON.stringify(dataObject[key], null, "\t"));
-			}
-		}
-	}
-
-	return jsonArray;
+function getPersonInfo(firstname, lastname){
+    
+    var jsonArray = [];
+    
+    for (var key in dataObject) {
+        if (dataObject.hasOwnProperty(key)) {
+            
+            if (dataObject[key].lastName.toLowerCase() === lastname.toLowerCase() && dataObject[key].firstName.toLowerCase() === firstname.toLowerCase()) {
+                console.log(key + " -> " + JSON.stringify(dataObject[key], null, "\t"));
+                jsonArray.push(key + " -> " + JSON.stringify(dataObject[key], null, "\t"));
+            }
+        }
+    }
+    return jsonArray;
 }
-
-
-function findPersonDetails (firstname, lastname)
+function getPersonDetails (firstname, lastname)
 {
-//var detailsArray = findPersonInfo(firstname, lastname)
-
+//var detailsArray = getPersonInfo(firstname, lastname)
 //detailsArray.push()
-
 }
-	//var array = Object.keys(dataObject).map(function(k) { return dataObject[k] });
-	//var result = array.find(x => x.firstName === 'firstname' && x.lastName ==='lastname');"This will be the information for whoever you searched for";
-	// look up person's information
-	
-function findLastNameById(id)
+    //var array = Object.keys(dataObject).map(function(k) { return dataObject[k] });
+    //var result = array.find(x => x.firstName === 'firstname' && x.lastName ==='lastname');"This will be the information for whoever you searched for";
+    // look up person's information
+    
+function getLastNameById(id)
 {
-
-	for(var x in dataObject)
-	{
-		if (dataObject[x].id() === id)
-		{
-		var lastName = dataObject[x].lastName;
-		}
-	}
-	console.log(lastName);
-	return lastName;
+    for(var x in dataObject)
+    {
+        if (dataObject[x].id() === id)
+        {
+        var lastName = dataObject[x].lastName;
+        }
+    }
+    console.log(lastName);
+    return lastName;
 }
-
-
-function findFirstNameById(id)
+function getFirstNameById(id)
 {
-
-	for(var x in dataObject)
-	{
-		if (dataObject[x].id() === id)
-		{
-		var firstName = dataObject[x].firstName;
-		}
-	}
-	console.log(lastName);
-	return lastName;
-
+    for(var x in dataObject)
+    {
+        if (dataObject[x].id() === id)
+        {
+        var firstName = dataObject[x].firstName;
+        }
+    }
+    console.log(lastName);
+    return lastName;
 }
-
 function findIdByName() 
 {
-
-	var firstName = getFirstName();
-	var lastName = getLastName(); 
+    var firstName = getFirstName();
+    var lastName = getLastName(); 
     
     for(var x in dataObject)
     {
-	if (dataObject[x].lastName.toLowerCase() === lastName && dataObject[x].firstName.toLowerCase() === firstName)
-		{
-		var ID = dataObject[x].id;
-		}
-	}
-	console.log(ID);
-	return ID;
+    if (dataObject[x].lastName.toLowerCase() === lastName && dataObject[x].firstName.toLowerCase() === firstName)
+        {
+        var id = dataObject[x].id;
+        }
+    }
+    console.log(id);
+    return id;
 }
-
-
 function findObjectById(id)
 {
-	var x;
-	for (x in dataObject)
-	{
-		if (id === dataObject[x].id)
-			return dataObject[x];
-	}
+    var x;
+    for (x in dataObject)
+    {
+        if (id === dataObject[x].id)
+            return dataObject[x];
+    }
 }
-
-
-function findParents(id)
-
+function findSiblings(id)
 {
-	var parentsArray = [];
-	var x;
-
-	var person = findObjectById(id);
-
-	if (person.parents.length !== 0)
-	{
-		for (x in dataObject)
-		{
-		//if (dataObject.parents[0] != null && dataObject.parents[1] != null)
-			if (person.parents[0] === dataObject[x].id || person.parents[1] === dataObject[x].id)
-			{
-				parentsArray.push(JSON.stringify(dataObject[x].firstName) + " " + JSON.stringify(dataObject[x].lastName) + " - parent", "\n");
-						
-			}
-
-		}
-		
-	}
-	else 
-	{
-		parentsArray.push("None found - parents", "\n");
-	}
-	return parentsArray;
+    var siblingsArray = [];
+    var x;
+    var person = findObjectById(id);
+    if (person.parents.length !== 0)
+    {
+        for (x in dataObject)
+        {
+            if (dataObject[x].parents.length !== 0 && dataObject[x] !== person)
+            {
+                if (person.parents[0] === dataObject[x].parents[0] || person.parents[0] === dataObject[x].parents[1] || person.parents[1] === dataObject[x].parents[0] || person.parents[1] === dataObject[x].parents[1])
+                {
+                    siblingsArray.push(JSON.stringify(dataObject[x].firstName) + " " + JSON.stringify(dataObject[x].lastName) + " - sibling", "\n");
+                }
+            }
+        }
+    }
+    else
+    {
+        siblingsArray.push("None found - siblings", "\n");
+    }
+    return siblingsArray;
 }
-
-
-function findDescendants(id){
-
-	var descendantsArray = [];
-	var i;
-
-	for (i = 0; i < dataObject.length; i++)
-	{
-
-		if (id === dataObject[i].parents[0] || id === dataObject[i].parents[1])
-		{
-
-			descendantsArray.push(JSON.stringify(dataObject[i].firstName) + " " + JSON.stringify(dataObject[i].lastName) + " - child", "\n");
-			
-				for (var k = 0; k < dataObject.length; k++){
-
-					if (dataObject[i].id ===dataObject[k].parents[0] || dataObject[i].id === dataObject[k].parents[1]){
-
-						descendantsArray.push(JSON.stringify(dataObject[k].firstName) + " " + JSON.stringify(dataObject[k].lastName) + " - grandchild", "\n");
-						
-					}
-				}
-		}
-	}
-	
-	return descendantsArray;
-								
+function findParents(id)
+{
+    var parentsArray = [];
+    var x;
+    var person = findObjectById(id);
+    if (person.parents.length !== 0)
+    {
+        for (x in dataObject)
+        {
+        //if (dataObject.parents[0] != null && dataObject.parents[1] != null)
+            if (person.parents[0] === dataObject[x].id || person.parents[1] === dataObject[x].id)
+            {
+                parentsArray.push(JSON.stringify(dataObject[x].firstName) + " " + JSON.stringify(dataObject[x].lastName) + " - parent", "\n");
+                        
+            }
+        }
+        
+    }
+    else 
+    {
+        parentsArray.push("None found - parents", "\n");
+    }
+    return parentsArray;
 }
-
-
-
-
-
-
+function findChildren(id)
+{
+    var childrenArray = [];
+    var i;
+    for (i = 0; i < dataObject.length; i++)
+    {
+        if (id === dataObject[i].parents[0] || id === dataObject[i].parents[1])
+        {
+            childrenArray.push(JSON.stringify(dataObject[i].firstName) + " " + JSON.stringify(dataObject[i].lastName) + " - child", "\n");
+        }
+    }
+    return childrenArray;
+}
+function findDescendants(id, descendantsArray = [])
+{
+    for (var i in dataObject)
+    {
+        if (id === dataObject[i].parents[0] || id === dataObject[i].parents[1])         //**for each person/object in array 
+        {
+            descendantsArray.push(JSON.stringify(dataObject[i].firstName) + " " + JSON.stringify(dataObject[i].lastName) + "\n");
+            findDescendants(dataObject[i].id, descendantsArray);
+        }
+        
+    }
+    
+    return descendantsArray;
+}
+    
+function findImmediateFamily(id)
+{
+var parents = findParents(id);
+var siblings = findSiblings(id);
+var currentSpouse = findCurrentSpouse(id);
+var descendants= findDescendants(id);
+var immediateFamily = parentsArray.concat(siblingsArray,descendantsArray);
+return immediateFamily;
+}
+function findCurrentSpouse(id){
+    var currentSpouseArray = [];
+    var spouse;
+    
+    var person = findObjectById(id);
+    
+        for(spouse in dataObject){
+            if (person.currentSpouse === dataObject[spouse].id){
+                 
+                currentSpouseArray.push(JSON.stringify(dataObject[spouse].firstName )+" "+ JSON.stringify(dataObject[spouse].lastName).split('"').join(' '));
+            }
+        }
+    
+    
+    return ("Current Spouse: " + currentSpouseArray);
+}
+function orderByBirthdate(arrayToOrder = [])
+{
+    arrayToOrder.sort(function(a, b){return new Date(a.dob).getTime() - new Date(b.dob).getTime()});
+    return arrayToOrder;
+}
+/* } */
+//function findByTraits(/*here i want to get a list of traits*/){
+//      var trait;
+//      
+//          for(trait in dataObject){
+//          
+ //             if(dataObject[trait]./*something more with the traits)
+//                  
+//          }
+//      return trait;
+ //     }
 // there will be much more here, and some of the code above will certainly change
-
-initSearch();
-//window.close(); // exit window as the end of the session -- you may remove this
