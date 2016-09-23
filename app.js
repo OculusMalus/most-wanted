@@ -333,6 +333,9 @@ function initSearch()
     // once the search is done, pass the results to the responder function
     responder(result);
 }
+
+
+
 function getFirstName ()
 {
     // get all the information you need to run the search
@@ -343,6 +346,9 @@ function getFirstName ()
         }
     return firstName;
 }
+
+
+
 function getLastName ()
 {
     var lastName = prompt("Do you know the person's last name? If not, leave blank and click on 'OK'");
@@ -352,6 +358,8 @@ function getLastName ()
         }
     return lastName;
 }
+
+
 function getGender ()
 {
     var gender = prompt("Type male, female or other. If you don't know, are unsure, or you don't care, leave blank and click on 'OK'")
@@ -364,6 +372,9 @@ function getGender ()
     }
     return gender;
 }
+
+
+
 function getDateOfBirth (results)
 {
     var dateOfBirth = prompt("Enter the person's date of birth in the mm/dd/yyyy format. If you don't, leave blank and click on 'OK'")
@@ -376,6 +387,9 @@ function getDateOfBirth (results)
     }
     return dateOfBirth;
 }
+
+
+
 function getHeight(){
     
     var height = prompt("Do you know the person's height in inches?  If you don't know it, leave blank and click 'OK'");
@@ -387,6 +401,9 @@ function getHeight(){
     }
     return height;
 }
+
+
+
 function getWeight(){
     var weight = prompt("Please enter the person's weight.  If you don't know it, leave blank and click 'OK'");
     if(weight!==""){
@@ -396,6 +413,9 @@ function getWeight(){
     }
     return weight;
 }
+
+
+
 function getEyeColor(){
     var eyeColor = ("Do you know the person's eye color?  If you don't, leave it blank and click 'OK'");
     if (eyeColor !==""){
@@ -405,6 +425,9 @@ function getEyeColor(){
     }
     return eyeColor;
 }
+
+
+
 function getOccupation(){
     var occupation = ("Do you know the person's occupation? If you don't, leave it blank and click 'OK'");
     while (/[^a-zA-Z]/.test(occupation))
@@ -413,14 +436,23 @@ function getOccupation(){
          }
         return occupation;
 }
+
+
+
 function responder(results){
     // results may be a list of strings, an object, or a single string. 
     alert(results) //console.log(dataObject[key]));
 }
+
+
+
 function getPersonByName (results)
 {
     var result = getPersonInfo(firstName, lastName);
 }
+
+
+
 function getPersonInfo(firstname, lastname){
     
     var jsonArray = [];
@@ -436,6 +468,9 @@ function getPersonInfo(firstname, lastname){
     }
     return jsonArray;
 }
+
+
+
 function getPersonDetails (firstname, lastname)
 {
 //var detailsArray = getPersonInfo(firstname, lastname)
@@ -444,6 +479,8 @@ function getPersonDetails (firstname, lastname)
     //var array = Object.keys(dataObject).map(function(k) { return dataObject[k] });
     //var result = array.find(x => x.firstName === 'firstname' && x.lastName ==='lastname');"This will be the information for whoever you searched for";
     // look up person's information
+
+
     
 function getLastNameById(id)
 {
@@ -457,6 +494,9 @@ function getLastNameById(id)
     console.log(lastName);
     return lastName;
 }
+
+
+
 function getFirstNameById(id)
 {
     for(var x in dataObject)
@@ -469,6 +509,9 @@ function getFirstNameById(id)
     console.log(lastName);
     return lastName;
 }
+
+
+
 function findIdByName() 
 {
     var firstName = getFirstName();
@@ -484,6 +527,9 @@ function findIdByName()
     console.log(id);
     return id;
 }
+
+
+
 function findObjectById(id)
 {
     var x;
@@ -493,6 +539,9 @@ function findObjectById(id)
             return dataObject[x];
     }
 }
+
+
+
 function findSiblings(id)
 {
     var siblingsArray = [];
@@ -517,6 +566,9 @@ function findSiblings(id)
     }
     return siblingsArray;
 }
+
+
+
 function findParents(id)
 {
     var parentsArray = [];
@@ -541,6 +593,9 @@ function findParents(id)
     }
     return parentsArray;
 }
+
+
+
 function findChildren(id)
 {
     var childrenArray = [];
@@ -554,6 +609,9 @@ function findChildren(id)
     }
     return childrenArray;
 }
+
+
+
 function findDescendants(id, descendantsArray = [])
 {
     for (var i in dataObject)
@@ -568,6 +626,8 @@ function findDescendants(id, descendantsArray = [])
     
     return descendantsArray;
 }
+
+
     
 function findImmediateFamily(id)
 {
@@ -578,6 +638,9 @@ var descendants= findDescendants(id);
 var immediateFamily = parentsArray.concat(siblingsArray,descendantsArray);
 return immediateFamily;
 }
+
+
+
 function findCurrentSpouse(id){
     var currentSpouseArray = [];
     var spouse;
@@ -594,11 +657,17 @@ function findCurrentSpouse(id){
     
     return ("Current Spouse: " + currentSpouseArray);
 }
+
+
+
 function orderByBirthdate(arrayToOrder = [])
 {
     arrayToOrder.sort(function(a, b){return new Date(a.dob).getTime() - new Date(b.dob).getTime()});
     return arrayToOrder;
 }
+
+
+
 /* } */
 //function findByTraits(/*here i want to get a list of traits*/){
 //      var trait;
@@ -611,3 +680,4 @@ function orderByBirthdate(arrayToOrder = [])
 //      return trait;
  //     }
 // there will be much more here, and some of the code above will certainly change
+initSearch();
