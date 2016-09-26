@@ -329,7 +329,8 @@ function initSearch()
     //var result = (getDescendants(dataObjectId));
     //var result = getFamily(dataObjectId);
     //var result = findParents(dataObjectId);
-    var result = findCurrentSpouse(dataObjectId);
+    //var result = findCurrentSpouse(dataObjectId);
+    var result = findSiblings(dataObjectId);
     // once the search is done, pass the results to the responder function
     responder(result);
 }
@@ -555,7 +556,9 @@ function findSiblings(id)
             {
                 if (person.parents[0] === dataObject[x].parents[0] || person.parents[0] === dataObject[x].parents[1] || person.parents[1] === dataObject[x].parents[0] || person.parents[1] === dataObject[x].parents[1])
                 {
-                    siblingsArray.push(JSON.stringify(dataObject[x].firstName) + " " + JSON.stringify(dataObject[x].lastName) + " - sibling", "\n");
+                    siblingsArray.push(JSON.stringify(dataObject[x]));
+                    orderByBirthdate(siblingsArray);
+                    var orderedSiblings = siblingsArray.push(JSON.stringify(dataObject[x].firstName) + " " + JSON.stringify(dataObject[x].lastName) + " - sibling", "\n");
                 }
             }
         }
@@ -564,7 +567,8 @@ function findSiblings(id)
     {
         siblingsArray.push("None found - siblings", "\n");
     }
-    return siblingsArray;
+
+    return orderedSiblings;
 }
 
 
